@@ -1,0 +1,4 @@
+---
+git_packages:
+  - git
+  - git-svn
