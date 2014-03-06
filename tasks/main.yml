@@ -1,4 +1,4 @@
 ---
 - name: Ensure git is installed.
-  yum: name={{ item }} state=installed
+  yum: name={{ item }} state=installed enablerepo={{ git_enablerepo }}
   with_items: git_packages

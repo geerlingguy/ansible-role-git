@@ -10,6 +10,10 @@ None.
 
 Available variables are listed below, along with default values (see `vars/main.yml`):
 
+    git_enablerepo: ""
+
+Any additional repositories you have installed that you would like to use for a newer/different Git version.
+
     git_packages:
       - git
       - git-svn

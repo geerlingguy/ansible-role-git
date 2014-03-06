@@ -1,4 +1,5 @@
 ---
+git_enablerepo: ""
 git_packages:
   - git
   - git-svn
