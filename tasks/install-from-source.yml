@@ -28,7 +28,7 @@
 
 - name: Build git.
   command: >
-    make prefix={{ git_install_source }} {{ item }}
+    make prefix={{ git_install_path }} {{ item }}
     chdir={{ workspace }}/git-{{ git_version }}
   when: "'no git' not in git_installed.stdout"
   with_items:
