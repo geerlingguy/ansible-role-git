@@ -8,6 +8,7 @@
     - zlib-devel
     - perl-devel
     - openssl-devel
+    - subversion-perl
 
 - name: Download git.
   get_url: >
@@ -30,7 +31,7 @@
   command: >
     make prefix={{ git_install_path }} {{ item }}
     chdir={{ workspace }}/git-{{ git_version }}
-  when: "'no git' not in git_installed.stdout"
+  when: "'no git' in git_installed.stdout"
   with_items:
     - all
     - install
