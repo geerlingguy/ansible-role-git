@@ -10,15 +10,25 @@ None.
 
 Available variables are listed below, along with default values (see `vars/main.yml`):
 
+    workspace: /root
+
+Where certain files will be downloaded and adjusted prior to git installation, if needed.
+
     git_enablerepo: ""
 
-Any additional repositories you have installed that you would like to use for a newer/different Git version.
+This variable, a well as `git_packages`, will be used to install git via `yum` if `git_install_from_source` is false. Any additional repositories you have installed that you would like to use for a newer/different Git version.
 
     git_packages:
       - git
       - git-svn
 
 The specific Git packages that will be installed. By default, `git-svn` is included, but you can easily add this variable to your playbook's variables and remove `git-svn` if desired.
+
+    git_install_from_source: false
+    git_install_path: "/usr"
+    git_version: "1.8.4"
+
+Whether to install Git from source; if set to `true`, `git_version` is required and will be used to install a particular version of git (see all available versions here: https://www.kernel.org/pub/software/scm/git/), and `git_install_path` defines where git should be installed.
 
 ## Dependencies
 
