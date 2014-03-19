@@ -1,9 +1,14 @@
 ---
 # Install git packages via yum when git is installed normally.
-- name: Ensure git is installed.
+- name: Ensure git is installed (RedHat).
   yum: name={{ item }} state=installed enablerepo={{ git_enablerepo }}
   with_items: git_packages
-  when: git_install_from_source == false
+  when: (git_install_from_source == false) and (ansible_os_family == 'RedHat')
+
+- name: Ensure git is installed (Debian).
+  apt: name={{ item }} state=installed
+  with_items: git_packages
+  when: (git_install_from_source == false) and (ansible_os_family == 'Debian')
 
 # Install git from source when git_install_from_source is true.
 - include: install-from-source.yml

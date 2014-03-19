@@ -1,6 +1,6 @@
 # Ansible Role: Git
 
-Installs Git, a distributed version control system, on any RHEL/CentOS Linux system.
+Installs Git, a distributed version control system, on any RHEL/CentOS or Debian/Ubuntu Linux system.
 
 ## Requirements
 
