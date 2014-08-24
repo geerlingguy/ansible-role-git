@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: ansible-role-git
+      git_install_from_source: true
+      git_install_path: "{{ git_install_path }}"
+      git_version: "{{ git_version }}"
