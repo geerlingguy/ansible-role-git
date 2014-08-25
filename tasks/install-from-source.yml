@@ -43,7 +43,7 @@
   command: >
     make prefix={{ git_install_path }} {{ item }}
     chdir={{ workspace }}/git-{{ git_version }}
-  when: "'no git' in git_installed.stdout"
+  when: git_installed|failed
   with_items:
     - all
     - install

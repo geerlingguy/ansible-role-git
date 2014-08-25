@@ -1,0 +1,27 @@
+---
+language: python
+python: "2.7"
+
+env:
+  - SITE=test.yml
+    PREFIX=/usr/local
+    GIT_VERSION=2.1.0
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  # Install Ansible.
+  - pip install ansible
+
+  # Ensure Git is not installed.
+  - sudo apt-get purge -y git
+
+  # Add ansible.cfg to pick up roles path.
+  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
+
+script:
+  - ansible-playbook -i tests/inventory tests/$SITE --syntax-check
+  - ansible-playbook -i tests/inventory tests/$SITE --sudo --extra-vars "git_install_path=$PREFIX git_version=$GIT_VERSION"
+  - test -x $PREFIX/bin/git
+  - $PREFIX/bin/git --version | grep -qF "$GIT_VERSION"
