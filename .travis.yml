@@ -8,7 +8,7 @@ env:
     GIT_PATH_PREFIX=/usr/local
   - SITE=test_install_package.yml
     GIT_PATH_PREFIX=/usr
-    GIT_VERSION=1.7.9.5
+    GIT_VERSION=1.8.5.5
 
 before_install:
   - sudo apt-get update -qq
@@ -30,6 +30,9 @@ script:
   # Run the role/playbook with ansible-playbook.
   - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
 
+  # Run again for testing... (TODO: REMOVE).
+  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
     ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
@@ -38,7 +41,8 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Make sure git is installed and at the correct version.
-  - git --version
   - which git
   - test -x $GIT_PATH_PREFIX/bin/git
+
+  - git --version
   - $GIT_PATH_PREFIX/bin/git --version | grep -qF "$GIT_VERSION"
