@@ -3,9 +3,10 @@ language: python
 python: "2.7"
 
 env:
-  - SITE=test.yml
-    PREFIX=/usr/local
+  - SITE=test_install_from_source.yml
     GIT_VERSION=2.1.0
+  - SITE=test_install_package.yml
+    GIT_VERSION=1.7.9.5
 
 before_install:
   - sudo apt-get update -qq
@@ -21,7 +22,19 @@ install:
   - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
 
 script:
-  - ansible-playbook -i tests/inventory tests/$SITE --syntax-check
-  - ansible-playbook -i tests/inventory tests/$SITE --sudo --extra-vars "git_install_path=$PREFIX git_version=$GIT_VERSION"
-  - test -x $PREFIX/bin/git
-  - $PREFIX/bin/git --version | grep -qF "$GIT_VERSION"
+  # Check the role/playbook's syntax.
+  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+
+  # Run the role/playbook with ansible-playbook.
+  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+
+  # Run the role/playbook again, checking to make sure it's idempotent.
+  - >
+    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Make sure git is installed and at the correct version.
+  - test -x /usr/local/bin/git
+  - /usr/local/bin/git --version | grep -qF "$GIT_VERSION"

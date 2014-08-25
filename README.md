@@ -1,5 +1,7 @@
 # Ansible Role: Git
 
+[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-git.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-git)
+
 Installs Git, a distributed version control system, on any RHEL/CentOS or Debian/Ubuntu Linux system.
 
 ## Requirements
@@ -16,7 +18,7 @@ Where certain files will be downloaded and adjusted prior to git installation, i
 
     git_enablerepo: ""
 
-This variable, a well as `git_packages`, will be used to install git via `yum` if `git_install_from_source` is false. Any additional repositories you have installed that you would like to use for a newer/different Git version.
+This variable, a well as `git_packages`, will be used to install git via a particular `yum` repo if `git_install_from_source` is false (CentOS only). Any additional repositories you have installed that you would like to use for a newer/different Git version.
 
     git_packages:
       - git
