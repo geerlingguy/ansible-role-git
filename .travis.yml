@@ -38,5 +38,7 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Make sure git is installed and at the correct version.
+  - git --version
+  - which git
   - test -x $GIT_PATH_PREFIX/bin/git
   - $GIT_PATH_PREFIX/bin/git --version | grep -qF "$GIT_VERSION"
