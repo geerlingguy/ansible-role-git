@@ -31,7 +31,7 @@ script:
   - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
 
   # Run again for testing... (TODO: REMOVE).
-  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv --sudo"
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
