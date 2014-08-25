@@ -23,9 +23,9 @@
   when: ansible_os_family == 'Debian'
 
 - name: Download git.
-  get_url: >
-    url=https://www.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.gz
-    dest={{ workspace }}
+  get_url:
+    url: "https://www.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.gz"
+    dest: "{{ workspace }}"
 
 - name: Expand git archive.
   command: >
