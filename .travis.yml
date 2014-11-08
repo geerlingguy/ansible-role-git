@@ -21,7 +21,7 @@ install:
   - sudo apt-get purge -y git
 
   # Add ansible.cfg to pick up roles path.
-  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
 script:
   # Check the role/playbook's syntax.
