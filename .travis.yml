@@ -8,7 +8,7 @@ env:
     GIT_PATH_PREFIX=/usr/local
   - SITE=test_install_package.yml
     GIT_PATH_PREFIX=/usr
-    GIT_VERSION=1.8.5.5
+    GIT_VERSION=1.8.5.6
 
 before_install:
   - sudo apt-get update -qq
