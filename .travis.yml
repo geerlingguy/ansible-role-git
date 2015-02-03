@@ -46,3 +46,8 @@ script:
 
   - git --version
   - $GIT_PATH_PREFIX/bin/git --version | grep -qF "$GIT_VERSION"
+
+after_failure:
+  # If we failed, it's likely due to Travis environment changes.
+  - which git
+  - git --version
