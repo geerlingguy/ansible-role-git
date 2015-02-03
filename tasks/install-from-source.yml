@@ -37,6 +37,14 @@
   changed_when: false
   failed_when: false
   register: git_installed
+  
+- name: Ensure git package is absent (RedHat).
+  yum: "pkg=git state=absent"
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure git package is absent (Debian).
+  apt: "pkg=git state=absent"
+  when: ansible_os_family == 'Debian'
 
 - name: Build git.
   command: >
