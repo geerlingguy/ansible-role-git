@@ -3,10 +3,10 @@ language: python
 python: "2.7"
 
 env:
-  - SITE=test_install_from_source.yml
+  - SITE=test-install-from-source.yml
     GIT_VERSION=2.1.0
     GIT_PATH_PREFIX=/usr/local
-  - SITE=test_install_package.yml
+  - SITE=test-install-package.yml
     GIT_PATH_PREFIX=/usr
     GIT_VERSION=1.8.5.6
 
