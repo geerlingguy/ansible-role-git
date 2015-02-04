@@ -1,5 +1,4 @@
 ---
-# Install git packages via yum when git is installed normally.
 - name: Ensure git is installed (RedHat).
   yum:
     name: "{{ item }}"
