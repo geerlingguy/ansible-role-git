@@ -9,6 +9,7 @@
     - perl-devel
     - openssl-devel
     - subversion-perl
+    - gcc
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure git's dependencies are installed (Debian).
@@ -19,6 +20,7 @@
     - gettext
     - libssl-dev
     - build-essential
+    - gcc
   when: ansible_os_family == 'Debian'
 
 - name: Download git.
