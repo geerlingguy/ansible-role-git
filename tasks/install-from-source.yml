@@ -23,28 +23,35 @@
     - gcc
   when: ansible_os_family == 'Debian'
 
+- name: Get installed version
+  command: git --version
+  changed_when: false
+  failed_when: false
+  register: git_installed_version
+
+- name: Force git install if the version numbers do not match
+  set_fact:
+    git_install_from_source_force: true
+  when: 'git_installed_version|success and (git_installed_version.stdout | regex_replace("^.*?([0-9\.]+)$", "\\1") | version_compare(git_version, operator="!="))'
+
 - name: Download git.
   get_url:
     url: "https://www.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.gz"
     dest: "{{ workspace }}/git-{{ git_version }}.tar.gz"
+  when:  git_installed_version|failed or git_install_from_source_force
 
 - name: Expand git archive.
   command: >
     tar -zxf {{ workspace }}/git-{{ git_version }}.tar.gz
     chdir={{ workspace }}
     creates={{ workspace }}/git-{{ git_version }}/README
-
-- name: Check if git is installed.
-  command: which git
-  changed_when: false
-  failed_when: false
-  register: git_installed
+  when:  git_installed_version|failed or git_install_from_source_force
 
 - name: Build git.
   command: >
     make prefix={{ git_install_path }} {{ item }}
     chdir={{ workspace }}/git-{{ git_version }}
-  when: git_installed|failed
+  when:  git_installed_version|failed or git_install_from_source_force
   with_items:
     - all
     - install
