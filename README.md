@@ -32,6 +32,10 @@ The specific Git packages that will be installed. By default, `git-svn` is inclu
 
 Whether to install Git from source; if set to `true`, `git_version` is required and will be used to install a particular version of git (see all available versions here: https://www.kernel.org/pub/software/scm/git/), and `git_install_path` defines where git should be installed.
 
+    git_install_from_source_force_update: false
+
+If git is already installed at and older version, force a new source build. Only applies if `git_install_from_source` is `true`.
+
 ## Dependencies
 
 None.
