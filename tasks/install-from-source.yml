@@ -31,7 +31,7 @@
 - name: Expand git archive.
   unarchive:
     src: "{{ workspace }}/git-{{ git_version }}.tar.gz"
-    dest: "{{ workspace }}/git-{{ git_version }}"
+    dest: "{{ workspace }}"
     creates: "{{ workspace }}/git-{{ git_version }}/README"
     copy: no
 
