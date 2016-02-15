@@ -8,28 +8,24 @@ env:
     init: /sbin/init
     run_opts: ""
     SITE: package
-    GIT_PATH_PREFIX: /usr
     GIT_VERSION: 1.7.1
   - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     SITE: package
-    GIT_PATH_PREFIX: /usr
     GIT_VERSION: 1.8.3.1
   - distribution: ubuntu
     version: 14.04
     init: /sbin/init
     run_opts: ""
     SITE: package
-    GIT_PATH_PREFIX: /usr
     GIT_VERSION: 1.9.1
   - distribution: ubuntu
     version: 12.04
     init: /sbin/init
     run_opts: ""
     SITE: package
-    GIT_PATH_PREFIX: /usr
     GIT_VERSION: 1.7.9.5
 
   # Only test source install on latest supported OSes.
@@ -39,14 +35,12 @@ env:
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     SITE: source
     GIT_VERSION: 2.7.1
-    GIT_PATH_PREFIX: /usr/local
   - distribution: ubuntu
     version: 14.04
     init: /sbin/init
     run_opts: ""
     SITE: source
     GIT_VERSION: 2.7.1
-    GIT_PATH_PREFIX: /usr/local
 
 services:
   - docker
@@ -79,10 +73,10 @@ script:
 
   # Ensure Git is installed and at the right version.
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm which git'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x $GIT_PATH_PREFIX/bin/git'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x /usr/bin/git'
 
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm git --version'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm $GIT_PATH_PREFIX/bin/git --version | grep -qF "$GIT_VERSION"'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm /usr/bin/git --version | grep -qF "$GIT_VERSION"'
 
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
