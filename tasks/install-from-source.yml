@@ -9,6 +9,7 @@
     - perl-devel
     - openssl-devel
     - subversion-perl
+    - make
     - gcc
   when: ansible_os_family == 'RedHat'
 
@@ -27,7 +28,7 @@
   command: git --version
   changed_when: false
   failed_when: false
-  # Ansible 2.x feature.
+  # Ansible 1.8 feature.
   # warn: no
   register: git_installed_version
 
@@ -52,12 +53,10 @@
 
 - name: Build git.
   command: >
-    {{ item }}
+    make prefix={{ git_install_path }} {{ item }}
     chdir={{ workspace }}/git-{{ git_version }}
   with_items:
-    - make configure
-    - "./configure prefix={{ git_install_path }}"
-    - make all
-    - make install
+    - all
+    - install
   when:  git_installed_version|failed or git_reinstall_from_source
   become: yes
