@@ -12,8 +12,12 @@
       yum: name=which state=present
       when: ansible_os_family == 'RedHat'
 
-    - name: Ensure git is not installed.
-      package: name=git state=absent
+    - name: Ensure git is not installed (RedHat).
+      yum: name=git state=absent
+      when: ansible_os_family == 'RedHat'
+    - name: Ensure git is not installed (Debian).
+      apt: name=git state=absent
+      when: ansible_os_family == 'Debian'
 
   roles:
     - role_under_test
