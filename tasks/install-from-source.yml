@@ -48,4 +48,4 @@
   with_items:
     - all
     - install
-  sudo: yes
+  become: yes

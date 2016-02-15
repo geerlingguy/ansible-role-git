@@ -5,7 +5,7 @@ python: "2.7"
 
 env:
   - SITE=test-install-from-source.yml
-    GIT_VERSION=2.1.0
+    GIT_VERSION=2.7.1
     GIT_PATH_PREFIX=/usr/local
   - SITE=test-install-package.yml
     GIT_PATH_PREFIX=/usr
