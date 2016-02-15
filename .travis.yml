@@ -2,6 +2,20 @@
 sudo: required
 
 env:
+  # Only test source install on latest supported OSes.
+  # - distribution: centos
+  #   version: 7
+  #   init: /usr/lib/systemd/systemd
+  #   run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  #   SITE: source
+  #   GIT_VERSION: 2.7.1
+  - distribution: ubuntu
+    version: 14.04
+    init: /sbin/init
+    run_opts: ""
+    SITE: source
+    GIT_VERSION: 2.7.1
+
   # Test package install on all supported OSes.
   - distribution: centos
     version: 6
@@ -27,20 +41,6 @@ env:
     run_opts: ""
     SITE: package
     GIT_VERSION: 1.7.9.5
-
-  # Only test source install on latest supported OSes.
-  - distribution: centos
-    version: 7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    SITE: source
-    GIT_VERSION: 2.7.1
-  - distribution: ubuntu
-    version: 14.04
-    init: /sbin/init
-    run_opts: ""
-    SITE: source
-    GIT_VERSION: 2.7.1
 
 services:
   - docker
