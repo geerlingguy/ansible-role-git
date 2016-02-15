@@ -18,3 +18,6 @@ git_version: "2.7.1"
 # If git is already installed at and older version, force a new source build.
 # Only applies if git_install_from_source is `true`.
 git_install_from_source_force_update: false
+
+# Leave this at it's default.
+git_reinstall_from_source: false

@@ -51,10 +51,11 @@
 
 - name: Build git.
   command: >
-    make prefix={{ git_install_path }} {{ item }}
+    {{ item }}
     chdir={{ workspace }}/git-{{ git_version }}
   with_items:
-    - all
-    - install
+    - "./configure prefix={{ git_install_path }}"
+    - make all
+    - make install
   when:  git_installed_version|failed or git_reinstall_from_source
   become: yes
