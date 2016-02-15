@@ -29,10 +29,11 @@
     dest: "{{ workspace }}/git-{{ git_version }}.tar.gz"
 
 - name: Expand git archive.
-  command: >
-    tar -zxf {{ workspace }}/git-{{ git_version }}.tar.gz
-    chdir={{ workspace }}
-    creates={{ workspace }}/git-{{ git_version }}/README
+  unarchive:
+    src: "{{ workspace }}/git-{{ git_version }}.tar.gz"
+    dest: "{{ workspace }}/git-{{ git_version }}"
+    creates: "{{ workspace }}/git-{{ git_version }}/README"
+    copy: no
 
 - name: Check if git is installed.
   command: which git
