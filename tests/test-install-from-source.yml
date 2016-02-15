@@ -3,7 +3,7 @@
   remote_user: root
 
   vars:
-    workspace: ~
+    workspace: /home/travis
     git_install_from_source: true
     git_install_path: /usr/local
     git_version: 2.7.1
