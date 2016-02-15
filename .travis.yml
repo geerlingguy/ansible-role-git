@@ -77,9 +77,6 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
-  # Debugging.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ls -lah /root'
-
   # Ensure Git is installed and at the right version.
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm which git'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x $GIT_PATH_PREFIX/bin/git'
