@@ -1,57 +1,90 @@
 ---
 sudo: required
-language: python
-python: "2.7"
 
 env:
-  - SITE=test-install-from-source.yml
-    GIT_VERSION=2.7.1
-    GIT_PATH_PREFIX=/usr/local
-  - SITE=test-install-package.yml
-    GIT_PATH_PREFIX=/usr
-    GIT_VERSION=1.8.5.6
+  # Test package install on all supported OSes.
+  - distribution: centos
+    version: 6
+    init: /sbin/init
+    run_opts: ""
+    SITE: package
+    GIT_PATH_PREFIX: /usr
+    GIT_VERSION: 1.7.1
+  - distribution: centos
+    version: 7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    SITE: package
+    GIT_PATH_PREFIX: /usr
+    GIT_VERSION: 1.8.3.1
+  - distribution: ubuntu
+    version: 14.04
+    init: /sbin/init
+    run_opts: ""
+    SITE: package
+    GIT_PATH_PREFIX: /usr
+    GIT_VERSION: 1.9.1
+  - distribution: ubuntu
+    version: 12.04
+    init: /sbin/init
+    run_opts: ""
+    SITE: package
+    GIT_PATH_PREFIX: /usr
+    GIT_VERSION: 1.7.9.5
+
+  # Only test source install on latest supported OSes.
+  - distribution: centos
+    version: 7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    SITE: source
+    GIT_VERSION: 2.7.1
+    GIT_PATH_PREFIX: /usr/local
+  - distribution: ubuntu
+    version: 14.04
+    init: /sbin/init
+    run_opts: ""
+    SITE: source
+    GIT_VERSION: 2.7.1
+    GIT_PATH_PREFIX: /usr/local
+
+services:
+  - docker
 
 before_install:
-  - sudo apt-get update -qq
-
-install:
-  # Install Ansible.
-  - pip install ansible
-
-  # Ensure Git is not installed.
-  - sudo apt-get purge -y git
-
-  # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+  # - sudo apt-get update
+  # Pull container
+  - 'sudo docker pull ${distribution}:${version}'
+  # Customize container
+  - 'sudo docker build --rm=true --file=tests/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
 
 script:
-  # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  - container_id=$(mktemp)
+  # Run container in detached state
+  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
 
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+  # Ansible syntax check.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml --syntax-check'
 
-  # Run again for testing... (TODO: REMOVE).
-  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv --sudo"
+  # Test role.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml'
 
-  # Run the role/playbook again, checking to make sure it's idempotent.
+  # Test role idempotence.
   - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test-${SITE}.yml
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
-  # Make sure git is installed and at the correct version.
-  - which git
-  - test -x $GIT_PATH_PREFIX/bin/git
+  # Ensure Git is installed and at the right version.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm which git'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm test -x $GIT_PATH_PREFIX/bin/git'
 
-  - git --version
-  - $GIT_PATH_PREFIX/bin/git --version | grep -qF "$GIT_VERSION"
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm git --version'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm $GIT_PATH_PREFIX/bin/git --version | grep -qF "$GIT_VERSION"'
 
-after_failure:
-  # If we failed, it's likely due to Travis environment changes.
-  - which git
-  - git --version
+  # Clean up
+  - 'sudo docker stop "$(cat ${container_id})"'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
