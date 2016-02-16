@@ -44,7 +44,7 @@ env:
 
 matrix:
   allow_failures:
-    - env: distribution="centos" version="7" init="/usr/lib/systemd/systemd" run_opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro" SITE="source" GIT_VERSION="2.7.1"
+    - env: distribution="centos" version="7" SITE="source"
 
 services:
   - docker
