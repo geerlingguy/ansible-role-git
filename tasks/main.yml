@@ -4,7 +4,7 @@
     name: "{{ item }}"
     state: installed
     enablerepo: "{{ git_enablerepo }}"
-  with_items: git_packages
+  with_items: "{{ git_packages }}"
   when: (git_install_from_source == false) and (ansible_os_family == 'RedHat')
 
 - name: Update apt cache (Debian).
@@ -15,7 +15,7 @@
   apt:
     name: "{{ item }}"
     state: installed
-  with_items: git_packages
+  with_items: "{{ git_packages }}"
   when: (git_install_from_source == false) and (ansible_os_family == 'Debian')
 
 # Install git from source when git_install_from_source is true.
