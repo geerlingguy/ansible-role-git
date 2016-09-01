@@ -9,6 +9,9 @@ git_packages:
   - git
   - git-svn
 
+# Explicitly set default git config option to use https instead of git protocol.
+git_use_https_for_clones: false
+
 # If set to TRUE, git will be installed from source, using the version set with
 # the 'git_version' variable instead of using a package.
 git_install_from_source: false

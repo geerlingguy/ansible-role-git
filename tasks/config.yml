@@ -1,0 +1,7 @@
+---
+- name: Use https protocol by default for git clones (if configured).
+  git_config:
+    name: url."https://".insteadOf
+    scope: global
+    value: "git://"
+  when: git_use_https_for_clones

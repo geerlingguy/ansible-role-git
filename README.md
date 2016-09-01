@@ -26,6 +26,10 @@ This variable, a well as `git_packages`, will be used to install git via a parti
 
 The specific Git packages that will be installed. By default, `git-svn` is included, but you can easily add this variable to your playbook's variables and remove `git-svn` if desired.
 
+    git_use_https_for_clones: false
+
+Force the use of the `https` protocol instead of the `git` protocol for git clones (setting this to `true` can be useful in some restrictive corporate environments, where port 9148 is blocked).
+
     git_install_from_source: false
     git_install_path: "/usr"
     git_version: "2.1.0"

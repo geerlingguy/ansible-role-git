@@ -21,3 +21,5 @@
 # Install git from source when git_install_from_source is true.
 - include: install-from-source.yml
   when: git_install_from_source == true
+
+- include: config.yml
