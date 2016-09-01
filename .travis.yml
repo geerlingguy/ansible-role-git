@@ -50,8 +50,8 @@ services:
   - docker
 
 before_install:
-  # Pull container
-  - 'sudo docker pull ${distro}:${version}'
+  # Pull container.
+  - 'sudo docker pull geerlingguy/docker-${distro}-ansible:latest'
 
 script:
   - container_id=$(mktemp)
