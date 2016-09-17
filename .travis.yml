@@ -25,6 +25,11 @@ env:
     run_opts: "--privileged"
     playbook: test.yml
     GIT_VERSION: 1.7.1
+  - distro: fedora24
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+    GIT_VERSION: 2.7.4
   - distro: ubuntu1604
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
