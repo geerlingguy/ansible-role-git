@@ -25,7 +25,9 @@
   when: ansible_os_family == 'Debian'
 
 - name: Get installed version
-  command: git --version
+  command: >
+    git --version
+    warn=no
   changed_when: false
   failed_when: false
   register: git_installed_version
