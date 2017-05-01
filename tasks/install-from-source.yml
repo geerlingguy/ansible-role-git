@@ -1,5 +1,6 @@
 ---
 - name: Ensure git's dependencies are installed (RedHat).
+  become: yes
   package: "name={{ item }} state=installed"
   with_items:
     - gettext-devel
@@ -14,6 +15,7 @@
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure git's dependencies are installed (Debian).
+  become: yes
   apt: "name={{ item }} state=installed"
   with_items:
     - libcurl4-gnutls-dev
