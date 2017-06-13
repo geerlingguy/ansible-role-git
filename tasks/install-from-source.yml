@@ -30,12 +30,12 @@
 
 - name: Ensure git's dependencies are installed (RedHat).
   package: "name={{ item }} state=installed"
-  with_items: git_package_deps
+  with_items: "{{ git_package_deps }}"
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure git's dependencies are installed (Debian).
   apt: "name={{ item }} state=installed"
-  with_items: git_package_deps
+  with_items: "{{ git_package_deps }}"
   when: ansible_os_family == 'Debian'
 
 - name: Get installed version
