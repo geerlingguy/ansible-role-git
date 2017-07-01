@@ -6,6 +6,9 @@ env:
   - distro: centos7
     playbook: test-source.yml
     GIT_VERSION: 2.9.3
+  - distro: fedora24
+    playbook: test-source.yml
+    GIT_VERSION: 2.9.3
   - distro: ubuntu1604
     playbook: test-source.yml
     GIT_VERSION: 2.9.3
