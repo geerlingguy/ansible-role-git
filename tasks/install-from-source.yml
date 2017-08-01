@@ -1,9 +1,4 @@
 ---
-- name: Define git_install_from_source_dependencies.
-  set_fact:
-    git_install_from_source_dependencies: "{{ __git_install_from_source_dependencies | list }}"
-  when:
-  - git_install_from_source_dependencies is not defined
 
 - name: Include OS-specific variables (RedHat).
   include_vars: "{{ ansible_os_family }}.yml"
@@ -23,6 +18,12 @@
   include_vars: "{{ ansible_os_family }}.yml"
   when:
   - ansible_os_family == "Debian"
+  - git_install_from_source_dependencies is not defined
+
+- name: Define git_install_from_source_dependencies.
+  set_fact:
+    git_install_from_source_dependencies: "{{ __git_install_from_source_dependencies | list }}"
+  when:
   - git_install_from_source_dependencies is not defined
 
 - name: Ensure git's dependencies are installed (RedHat).
