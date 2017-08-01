@@ -5,20 +5,17 @@
   when:
   - ansible_os_family == "RedHat"
   - ansible_distribution != "Fedora"
-  - git_install_from_source_dependencies is not defined
 
 - name: Include OS-specific variables (Fedora).
   include_vars: "{{ ansible_distribution }}.yml"
   when:
   - ansible_os_family == "RedHat"
   - ansible_distribution == "Fedora"
-  - git_install_from_source_dependencies is not defined
 
 - name: Include OS-specific variables (Debian).
   include_vars: "{{ ansible_os_family }}.yml"
   when:
   - ansible_os_family == "Debian"
-  - git_install_from_source_dependencies is not defined
 
 - name: Define git_install_from_source_dependencies.
   set_fact:
