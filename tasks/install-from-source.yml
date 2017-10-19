@@ -38,6 +38,10 @@
   check_mode: no
   register: git_installed_version
 
+- name: Determine if the version check failed
+  set_fact:
+    git_installed_version_failed: "{{ git_installed_version.rc not in [0, "0"] }}"
+
 - name: Force git install if the version numbers do not match
   set_fact:
     git_reinstall_from_source: true
@@ -49,7 +53,7 @@
   get_url:
     url: "https://www.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.gz"
     dest: "{{ workspace }}/git-{{ git_version }}.tar.gz"
-  when:  git_installed_version|failed or git_reinstall_from_source
+  when:  git_installed_version_failed or git_reinstall_from_source
 
 - name: Expand git archive.
   unarchive:
@@ -57,7 +61,7 @@
     dest: "{{ workspace }}"
     creates: "{{ workspace }}/git-{{ git_version }}/README"
     copy: no
-  when:  git_installed_version|failed or git_reinstall_from_source
+  when:  git_installed_version_failed or git_reinstall_from_source
 
 - name: Build git.
   command: >
@@ -66,5 +70,5 @@
   with_items:
     - all
     - install
-  when:  git_installed_version|failed or git_reinstall_from_source
+  when:  git_installed_version_failed or git_reinstall_from_source
   become: yes
