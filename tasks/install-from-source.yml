@@ -40,7 +40,7 @@
 
 - name: Determine if the version check failed
   set_fact:
-    git_installed_version_failed: "{{ git_installed_version.rc not in [0, "0"] }}"
+    git_installed_version_failed: "{{ git_installed_version.rc not in [0, '0'] }}"
 
 - name: Force git install if the version numbers do not match
   set_fact:
