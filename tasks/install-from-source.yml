@@ -43,13 +43,13 @@
     git_reinstall_from_source: true
   when:
     - git_install_from_source_force_update
-    - git_installed_version|success and (git_installed_version.stdout | regex_replace("^.*?([0-9\.]+)$", "\\1") | version_compare(git_version, operator="!="))
+    - (git_installed_version.rc == 0) and (git_installed_version.stdout | regex_replace("^.*?([0-9\.]+)$", "\\1") | version_compare(git_version, operator="!="))
 
 - name: Download git.
   get_url:
     url: "https://www.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.gz"
     dest: "{{ workspace }}/git-{{ git_version }}.tar.gz"
-  when:  git_installed_version|failed or git_reinstall_from_source
+  when: (git_installed_version.rc != 0) or git_reinstall_from_source
 
 - name: Expand git archive.
   unarchive:
@@ -57,7 +57,7 @@
     dest: "{{ workspace }}"
     creates: "{{ workspace }}/git-{{ git_version }}/README"
     copy: no
-  when:  git_installed_version|failed or git_reinstall_from_source
+  when: (git_installed_version.rc != 0) or git_reinstall_from_source
 
 - name: Build git.
   command: >
@@ -66,5 +66,5 @@
   with_items:
     - all
     - install
-  when:  git_installed_version|failed or git_reinstall_from_source
+  when: (git_installed_version.rc != 0) or git_reinstall_from_source
   become: yes
