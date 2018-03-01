@@ -20,11 +20,13 @@
   when: git_install_from_source_dependencies is not defined
 
 - name: Ensure git's dependencies are installed (RedHat).
+  become: yes
   package: "name={{ item }} state=installed"
   with_items: "{{ git_install_from_source_dependencies }}"
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure git's dependencies are installed (Debian).
+  become: yes
   apt: "name={{ item }} state=installed"
   with_items: "{{ git_install_from_source_dependencies }}"
   when: ansible_os_family == 'Debian'
