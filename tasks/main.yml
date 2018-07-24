@@ -7,6 +7,11 @@
   with_items: "{{ git_packages }}"
   when: (git_install_from_source == false) and (ansible_os_family == 'RedHat')
 
+- name: Add git ppa to get latest version (Ubuntu)
+  apt_repository:
+    repo: 'ppa:git-core/ppa'
+  when: (git_ensure_latest_version == true) and (ansible_distribution == 'Ubuntu')
+
 - name: Update apt cache (Debian).
   apt: update_cache=yes cache_valid_time=86400
   when: ansible_os_family == 'Debian'
