@@ -22,7 +22,7 @@ env:
     GIT_VERSION: 1.7.1
   - distro: fedora27
     playbook: test.yml
-    GIT_VERSION: 2.14.3
+    GIT_VERSION: 2.14.4
   - distro: ubuntu1804
     playbook: test.yml
     GIT_VERSION: 2.15.1
