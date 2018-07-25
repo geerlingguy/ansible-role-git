@@ -25,7 +25,7 @@ env:
     GIT_VERSION: 2.14.4
   - distro: ubuntu1804
     playbook: test.yml
-    GIT_VERSION: 2.15.1
+    GIT_VERSION: 2.17.1
   - distro: ubuntu1604
     playbook: test.yml
     GIT_VERSION: 2.7.4
