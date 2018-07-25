@@ -11,7 +11,7 @@ git_packages:
 
 # If git_ensure_latest_version is set to true instead of the lts git version the
 # latest version is installed on Ubuntu.
-git_ensure_latest_version: true
+git_ensure_latest_version: false
 
 # If set to TRUE, git will be installed from source, using the version set with
 # the 'git_version' variable instead of using a package.
