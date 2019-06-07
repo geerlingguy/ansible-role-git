@@ -8,8 +8,6 @@ env:
   matrix:
     - MOLECULE_DISTRO: centos7
       MOLECULE_PLAYBOOK: playbook-source.yml
-    - MOLECULE_DISTRO: fedora29
-      MOLECULE_PLAYBOOK: playbook-source.yml
     - MOLECULE_DISTRO: ubuntu1804
       MOLECULE_PLAYBOOK: playbook-source.yml
     - MOLECULE_DISTRO: centos7
