@@ -1,0 +1,28 @@
+---
+pipelineConfig:
+  agent:
+    image: python
+    label: jenkins-python
+  pipelines:
+    pullRequest:
+      pipeline:
+        agent:
+          image: python
+        stages:
+          - name: run-preinstall
+            steps:
+              - command: pip
+                args:
+                  - install
+                  - -r
+                  - requirements.txt
+                name: Install python dependencies
+              - command: ansible-lint
+                args:
+                  - ./
+                name: run ansible-lint
+              - command: yamllint
+                args:
+                  - -c molecule/default/yaml-lint.yml
+                  - ./
+                name: run yaml-lint

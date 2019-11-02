@@ -1,4 +1,6 @@
 ---
+- command: whoami
+
 - name: Ensure git is installed (RedHat).
   package:
     name: "{{ git_packages }}"
