@@ -2,7 +2,7 @@
 - name: Ensure git is installed (RedHat).
   package:
     name: "{{ git_packages }}"
-    state: present
+    state: "{{ util_pkg_state|default('present') }}"
     enablerepo: "{{ git_enablerepo | default(omit, true) }}"
   when:
     - not git_install_from_source | bool
@@ -15,7 +15,7 @@
 - name: Ensure git is installed (Debian).
   apt:
     name: "{{ git_packages }}"
-    state: present
+    state: "{{ util_pkg_state|default('present') }}"
   when:
     - not git_install_from_source | bool
     - ansible_os_family == 'Debian'
