@@ -25,7 +25,7 @@
 
 - name: Get installed version.
   command: >
-    git --version
+    {{ git_install_path }}/bin/git --version
     warn=no
   changed_when: false
   failed_when: false
