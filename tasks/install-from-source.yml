@@ -51,6 +51,7 @@
     dest: "{{ workspace }}"
     creates: "{{ workspace }}/git-{{ git_version }}/README"
     copy: false
+    mode: 0755
   when: (git_installed_version.rc != 0) or (git_reinstall_from_source | bool)
 
 - name: Build git.
