@@ -1,6 +1,6 @@
 # Ansible Role: Git
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-git.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-git)
+[![CI](https://github.com/geerlingguy/ansible-role-git/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-git/actions?query=workflow%3ACI)
 
 Installs Git, a distributed version control system, on any RHEL/CentOS or Debian/Ubuntu Linux system.
 
