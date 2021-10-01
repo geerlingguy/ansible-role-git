@@ -20,3 +20,7 @@ git_install_from_source_force_update: false
 
 # Leave this at it's default.
 git_reinstall_from_source: false
+
+# The git subtree command is not supported by default when building from source.
+# Set this to true enables `git subtree` support.
+git_enable_subtree: false

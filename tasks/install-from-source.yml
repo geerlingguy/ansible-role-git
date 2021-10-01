@@ -63,3 +63,10 @@
     - install
   when: (git_installed_version.rc != 0) or (git_reinstall_from_source | bool)
   become: true
+
+- name: Build git subtree.
+  shell:
+    cmd: make prefix={{ git_install_path }}; GITPATH=`git --exec-path`; install -m 755 git-subtree $GITPATH
+    chdir: /{{ workspace }}/git-{{ git_version }}/contrib/subtree
+  become: yes
+  when: git_enable_subtree | bool
