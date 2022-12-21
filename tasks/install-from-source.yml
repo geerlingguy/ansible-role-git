@@ -39,9 +39,21 @@
 
 - name: Download git.
   get_url:
-    url: "https://www.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.gz"
-    dest: "{{ workspace }}/git-{{ git_version }}.tar.gz"
+    url: "https://www.kernel.org/pub/software/scm/git/{{ item }}"
+    dest: "{{ workspace }}"
+  loop:
+    - "git-{{ git_version }}.tar.gz"
+    - "sha256sums.asc"
   when: (git_installed_version.rc != 0) or (git_reinstall_from_source | bool)
+
+- name: Verify checksum.
+  shell: "/usr/bin/sha256sum -c sha256sums.asc | grep OK$"
+  args:
+    chdir: "{{ workspace }}"
+  register: sha_output
+  failed_when: "'OK' not in sha_output.stdout"
+  changed_when: false
+  check_mode: false
 
 - name: Expand git archive.
   unarchive:
