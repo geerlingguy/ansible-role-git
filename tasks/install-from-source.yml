@@ -30,6 +30,9 @@
   check_mode: false
   register: git_installed_version
 
+- debug: 
+    msg: "{{git_installed_version}}"
+
 - name: Force git install if the version numbers do not match.
   set_fact:
     git_reinstall_from_source: true
