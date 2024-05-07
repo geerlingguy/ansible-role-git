@@ -13,6 +13,10 @@
   include_vars: "{{ ansible_os_family }}.yml"
   when: ansible_os_family == "Debian"
 
+- name: Include OS-specific variables (Suse).
+  include_vars: "{{ ansible_os_family }}.yml"
+  when: ansible_os_family == "Suse"
+
 - name: Define git_install_from_source_dependencies.
   set_fact:
     git_install_from_source_dependencies: "{{ __git_install_from_source_dependencies | list }}"

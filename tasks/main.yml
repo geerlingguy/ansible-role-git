@@ -1,12 +1,12 @@
 ---
-- name: Ensure git is installed (RedHat).
+- name: Ensure git is installed (RedHat/Suse).
   package:
     name: "{{ git_packages }}"
     state: present
     enablerepo: "{{ git_enablerepo | default(omit, true) }}"
   when:
     - not git_install_from_source | bool
-    - ansible_os_family == 'RedHat'
+    - ansible_os_family in ['RedHat', 'Suse']
 
 - name: Update apt cache (Debian).
   apt: update_cache=true cache_valid_time=86400
