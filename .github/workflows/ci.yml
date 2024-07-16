@@ -47,7 +47,7 @@ jobs:
             playbook: converge.yml
           - distro: debian11
             playbook: converge.yml
-          - distro: rockylinux8
+          - distro: rockylinux9
             playbook: source-install.yml
           - distro: ubuntu2004
             playbook: source-install.yml
