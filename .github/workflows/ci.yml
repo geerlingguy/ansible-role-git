@@ -44,13 +44,13 @@ jobs:
           # See: https://github.com/geerlingguy/docker-rockylinux9-ansible/issues/6
           # - distro: rockylinux9
           #   playbook: converge.yml
-          - distro: ubuntu2204
+          - distro: ubuntu2404
             playbook: converge.yml
-          - distro: debian11
+          - distro: debian13
             playbook: converge.yml
           # - distro: rockylinux9
           #   playbook: source-install.yml
-          - distro: ubuntu2004
+          - distro: ubuntu2404
             playbook: source-install.yml
 
     steps:
