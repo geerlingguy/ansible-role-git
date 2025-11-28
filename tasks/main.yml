@@ -6,11 +6,11 @@
     enablerepo: "{{ git_enablerepo | default(omit, true) }}"
   when:
     - not git_install_from_source | bool
-    - ansible_os_family == 'RedHat'
+    - ansible_facts.os_family == 'RedHat'
 
 - name: Update apt cache (Debian).
   apt: update_cache=true cache_valid_time=86400
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
 
 - name: Ensure git is installed (Debian).
   apt:
@@ -18,7 +18,7 @@
     state: present
   when:
     - not git_install_from_source | bool
-    - ansible_os_family == 'Debian'
+    - ansible_facts.os_family == 'Debian'
 
 - import_tasks: install-from-source.yml
   when: git_install_from_source | bool
